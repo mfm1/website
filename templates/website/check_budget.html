@@ -1,0 +1,51 @@
+{% extends 'website/header.html' %}
+{% load static %}
+
+{% block content %}
+<div class="col-md-8 offset-md-2" style="margin-top: 50px; ">
+<h2> Budget For: {{ today }}</h2>
+{% for budget in budgets %}
+{% if today == budget.budget_date %}
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Category</th>
+      <th scope="col">Amount </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ budget.category }}</td>
+      <td>{{ country.currency }}{{ budget.amount }}</td>
+    </tr>
+   
+  </tbody>
+</table>
+{% endif %}
+{% endfor %}
+<br>
+
+<hr>
+<br>
+
+<form method="POST">
+  {% csrf_token %}
+  {{ form }}
+  <button type="submit" >SAVE</button>
+</form>
+<hr>
+{% regroup budget_records by budget_date as bd %}
+  {% for budget_date in bd %}
+  <h3>Budget Record For: {{ budget_date.grouper }}</h3>
+  {% for datas in budget_date.list %}
+    {% if datas %}
+    <p><strong>Category: </strong>{{ datas.category}}</p>
+    <p><strong>Budget Amount</strong> {{ country.currency }}{{ datas.amount }}</p>
+    <hr>
+    {% else %}
+    <p>No Budget For This Date</p>
+   {% endif%}
+  {% endfor %}
+  {% endfor %}
+</div>
+{% endblock %}

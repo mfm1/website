@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        {% load static %}
+        {% load filter %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" >
+        <!--<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}"/>-->
+        <link rel="stylesheet" href="/static/website/css/header.css" type="text/css" media="screen" >
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light ">
+  <a class="navbar-brand" href="{% url 'website:homepage' %}">Smart X</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse justify-content-end  " id="navbarSupportedContent">
+    <ul class="navbar-nav  " >
+      <li class="nav-item active ">
+        <a class="nav-link " href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      {% if user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link" href="/account"><strong>Account</strong></a></li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Track Expense
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'website:create-expense' %}">Create Expense</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'website:check-expense' %}">Check Expense</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Budget
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'website:create-budget' %}">Create Budget</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'website:check-budget' %}">Check Budget</a>
+        </div>
+      </li>
+        <li class="nav-item"><a class="nav-link" href="/contact"><strong>Contact</strong></a></li>
+        <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle btn" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ request.user.last_name }} {{ request.user.email|gravatar:30 }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+           <a class="dropdown-item" href="{% url 'website:profile' %}">Profile</a>
+           <div class="dropdown-divider"></div>
+           <a class="dropdown-item" href="{% url 'website:settings' %}">Setting</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/logout"><strong>Logout</strong></a>
+        </div>
+      </li>
+      {% else %}
+        <li class="nav-item">
+        <a class="nav-link" href="/contact"><strong>Contact</strong></a></li>
+        <li class="nav-item"><a class="nav-link" href="/login"><strong>Login</strong></a></li>
+        <li class="nav-item"><a class="nav-link" href="/register"><strong>Register</strong></a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+<body id="body_tag">
+  {% if messages %}
+  <ul class="messages">
+            
+    {% for message in messages %}
+      <li class="{{ message.tags }}">
+        {% if 'safe' in message.tags %}
+          {{ message|safe }}
+        {% else %}
+          {{ message }}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% block content %}
+
+  {% endblock %}
+    
+<!--    <footer style="position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: rgb(50,50,50);
+  text-align: center; ">
+      <div class="row">
+      <div class ="col">
+      <div style="display: table; ">
+        <a href="{% url 'website:homepage' %}" style="text-decoration: none; color: white;" >Home</a>
+      </div>
+      <div style="display: table;">
+        <a href="#" style="text-decoration: none; color: white;" >Contact</a>
+      </div>
+      </div>
+      </div>
+      <div class ="col">
+        <a href="#" style="color: white; text-decoration: none;">About</a>
+      </div>
+      <div class="container text-center">
+        <p style="color: white;">Copyright@smartx 2019</p>
+      </div>
+    </footer>> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--<script src="{% static 'jquery/jquery-3.4.1.js' %}"></script>-->
+    <script src="/static/website/jquery/website-jquery.js"></script>
+</body>
+</html>

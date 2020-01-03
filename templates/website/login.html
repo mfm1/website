@@ -1,0 +1,25 @@
+{% extends "website/header.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="parent_form">
+<div class="col-md-8 offset-md-2" id="lgn_form">
+<h1 id="title" >Welcome Back </h1>
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group" >
+      {{ form.username | as_crispy_field }}
+    </div>
+    <div class="form-group" >
+      {{ form.password | as_crispy_field }}
+    </div>
+    <small>
+      forgot password? <a href="#"><strong>Here</strong></a>
+    </small>
+    <br>
+    <br>
+    <button id="lgn_btn" type="submit" ><strong>Log In</strong></button>
+</form>
+</div>
+</div>
+{% endblock %}

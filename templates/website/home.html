@@ -1,0 +1,40 @@
+{% extends "website/header.html" %}
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div>
+
+</div>
+{% else %}
+<div class="home_top">
+  <img src="/static/images/smartx copy.png" alt="Background Image" style="width: 100%;">
+  <h1 id="home_text">We help you have control<br> 
+  over your money, while you<br>
+   spend less and get more</h1>
+</div>
+<div class="row" id="home_id">
+<div class="col">
+<div>
+  <h3 id="texttwo">Get to know your money with smartx </h3>
+</div>
+<div class="row" style="width: 100%; ">
+<div class="card" style="width: 40%;;margin-left: 5%; ">
+  <div class="card-body">
+    <h5 class="card-title">Wanna Spend Less And Get More?</h5>
+    <p class="card-text">Join Many Of Our Happy Members.</p>
+    <a href="{% url 'website:register' %}" class="btn btn-primary">Register Now</a>
+  </div>
+</div>
+<div class="card" style="width: 40%; margin-left: 5%;">
+  <div class="card-body">
+    <h5 class="card-title">Already A Happy Member?</h5>
+    <p class="card-text">We're Glad To Have You Back, Now Is The Time To Keep Track Of Your Money</p>
+    <a href="{% url 'website:login' %}" class="btn btn-primary">Login Now</a>
+  </div>
+</div>
+</div>
+</div>
+</div>
+{% endif %}
+{% endblock %}

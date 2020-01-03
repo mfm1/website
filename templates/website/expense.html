@@ -1,0 +1,31 @@
+{% extends 'website/header.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="parent_form">
+<div class="col-md-8 offset-md-2" id="expense_form">
+<h1 id="title" class="justify-content-center ">Know Where Your Money Goes</h1>
+<form method="POST">
+  {% csrf_token %}
+  <div class="form-group" >
+      {{ form.expense_category | as_crispy_field }}
+    </div>
+    <div class="form-group" >
+      {{ form.spent | as_crispy_field }}
+    </div>
+    <div class="form-group" >
+      {{ form.expense_date | as_crispy_field }}
+    </div>
+    <div class="form-group" >
+      {{ form.content_bought | as_crispy_field }}
+    </div>
+    <br>
+  <div class="row">
+  <button type="submit" id="expense_btn" >Create Expenses</button>
+  <a class="btn btn-primary" href="{% url 'website:check-expense' %}"  >Check Expenses</a>
+  </div>
+</form>
+</div>
+</div>
+{% endblock  %}

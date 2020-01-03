@@ -1,0 +1,63 @@
+{% extends 'website/header.html' %}
+{% load static %}
+
+{% block content %}
+<div class="col-md-8 offset-md-2" style="margin-top: 50px; ">
+<div>
+<h2> Expense For: {{ today }}</h2>
+{% for data in datas %}
+{% if today == data.expense_date %}
+<table class="table table-striped table-hover" >
+  <thead>
+    <tr>
+      <th scope="col">Category</th>
+      <th scope="col">Content Bought</th>
+      <th scope="col">Amount Spent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ data.expense_category }}</td>
+      <td>{{ data.content_bought }}</td>
+      <td>{{ country.currency }}{{ data.spent }}</td>
+    </tr>
+   
+  </tbody>
+</table>
+{% endif %}
+{% endfor %}
+<br>
+{% if total_spent_today == 0 %}
+  <h3 style="color: green;">Total Spent Today: {{ country.currency }}{{ total_spent_today }}</h3>
+{% else %}
+  <h3 style="color: darkred;">Total Spent Today: {{ country.currency }}{{ total_spent_today }}</h3>
+{% endif %}
+{% if total_spent_w == 0 %}
+  <h3 style="color: green;">Total Spent This Week: {{ country.currency }}{{ total_spent_w }}</h3>
+{% else %}
+  <h3 style="color: darkred;">Total Spent This Week: {{ country.currency }}{{ total_spent_w }}</h3>
+{% endif %}
+</div>
+<hr>
+<br>
+<div>
+  <h2>....Check Past Expenses....</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">CHECK</button>
+</div>
+<hr>
+{% regroup expense_record by expense_date as er %}
+  {% for expense_date in er %}
+  <h3>Expense Record For: {{ expense_date.grouper }}</h3>
+  {% for datas in expense_date.list %}
+    <p><strong>Category: </strong>{{ datas.expense_category}}</p>
+    <p><strong>Content Bought: </strong>{{ datas.content_bought }}</p>
+    <p><strong>Budget Amount</strong> {{ country.currency }}{{ datas.spent }}</p>
+    <hr>
+  {% endfor %}
+  {% endfor %}
+<br>
+</div>
+{% endblock  %}

@@ -1,0 +1,68 @@
+{% extends 'website/header.html' %}
+{% load static %}
+{% load filter %}
+
+{% block content %}
+<div class="col-md-8 offset-md-2" style="margin-top:50px;">
+<div class="row">
+  <div class="center-block ">
+    {{ request.user.email|gravatar:180}}
+    <h4>{{ request.user.get_full_name }}</h4>
+    <small>
+      {{ country.country.name }}<img src="{{ country.country.flag }}" alt="country flag">
+    </small>
+    <br>
+    <br>
+    <table class="table table table-hover" style="width: 100%%;">
+    <thead>
+    <tr>
+      <th scope="col" >Profile</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><a style="color: black ; display: block; text-decoration: none;" href="{% url 'website:create-expense'%}">Track Expense</a></td>
+    </tr>
+    <tr>
+      <td><a href="{% url 'website:check-expense' %}" style="color: black; display: block; text-decoration: none; ">Check Expense</a></td>
+    </tr>
+    <tr>
+      <td><a href="{% url 'website:create-budget' %}" style="color: black; display: block; text-decoration: none; ">Budget</a></td>
+    </tr>
+    <tr>
+      <td><a href="{% url 'website:check-budget' %}" style="color: black; display: block; text-decoration: none; ">Check Budget</a></td>
+    </tr>
+    <tr>
+      <td><a href="{% url 'website:settings' %}" style="color: black; display: block; text-decoration: none; ">Settings</a></td>
+    </tr>
+    <tr>
+      <td><a href="{% url 'website:logout' %}" style="color: black; display: block; text-decoration: none; ">Logout</a></td>
+    </tr>
+    </tbody>
+    </table>
+  </div>
+  <div style="margin-left: 30px;">
+    <h2>Monthly Income | Savings</h2>
+    <hr>
+    <br>
+    <h5 style="color: green;"> This Month's Income: {{ country.currency }}{{monthly_incomes }}</h5>
+    <h5 style="color: darkblue" >All Time Income: {{ country.currency }}{{ total_income }}</h5>
+    <hr>
+    <hr>
+    <h5 style="color: green;"> This Month's Savings: {{country.currency }}{{ monthly_savings }}</h5>
+    <h5 style="color: darkblue" >All Time Savings: {{country.currency }}{{ total_saving }} </h5>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit">ADD</button>
+    </form>
+    <form method="POST">
+      {% csrf_token %}
+      {{ income_form }}
+      <button type="submit">ADD</button>
+    </form>
+  </div>
+</div>
+</div>
+
+{% endblock  %}
