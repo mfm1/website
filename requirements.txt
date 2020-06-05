@@ -1,5 +1,5 @@
 asgiref==3.2.3
-Django==3.0
+Django==3.0.7
 django-appconf==1.0.3
 django-avatar==4.1.0
 django-countries==5.5
