@@ -5,7 +5,7 @@ django-avatar==4.1.0
 django-countries==5.5
 django-crispy-forms==1.8.1
 django-money==1.0
-numpy==1.18.0
+numpy==1.22.0
 pandas==0.25.3
 Pillow==6.2.1
 py-moneyed==0.8.0
